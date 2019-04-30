@@ -12,6 +12,32 @@
 
 > ARC only, or add the **"-fobjc-arc"** flag for non-ARC
 
+## Updating Metadata
+
+Look up release tag name from https://github.com/googlei18n/libphonenumber/releases and provide it as the first argument to `swift metadataGenerator.swift`
+
+```
+$ cd libPhoneNumberTests && swift metadataGenerator.swift <libPhoneNumber release tag name> && cd ..
+Javascript exception thrown: ReferenceError: Can't find variable: window
+Javascript exception thrown: Error: goog.require could not find: goog.proto2.Message
+Done
+
+$ cd libPhoneNumber && ./GeneratePhoneNumberHeader.sh ../libPhoneNumberTests/generatedJSON/PhoneNumberMetaData.json ../libPhoneNumberTests/generatedJSON/ShortNumberMetadata.json ../libPhoneNumberTests/generatedJSON/PhoneNumberMetaDataForTesting.json && cd ..
+
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   libPhoneNumber/NBGeneratedPhoneNumberMetaData.h
+	modified:   libPhoneNumberTests/generatedJSON/PhoneNumberMetaData.json
+	modified:   libPhoneNumberTests/generatedJSON/PhoneNumberMetaDataForTesting.json
+	modified:   libPhoneNumberTests/generatedJSON/ShortNumberMetadata.json
+```
+
 ## Update Log
 [https://github.com/iziz/libPhoneNumber-iOS/wiki/Update-Log](https://github.com/iziz/libPhoneNumber-iOS/wiki/Update-Log)
 

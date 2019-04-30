@@ -56,6 +56,17 @@ func loadJS(from url: URL, to context: JSContext) {
   context.evaluateScript(script)
 }
 
+if CommandLine.argc < 2 {
+  let executableName = (CommandLine.arguments[0] as NSString).lastPathComponent
+
+  fputs("Usage:\n", __stderrp)
+  fputs("    swift \(executableName) <libPhoneNumber release tag name>\n", __stderrp)
+  fputs("https://github.com/googlei18n/libphonenumber/releases\n", __stderrp)
+  exit(1)
+}
+
+let tagName = CommandLine.arguments[1]
+
 // Create JavaScript context.
 let context = JSContext()!
 context.exceptionHandler = { _, exception in
@@ -84,9 +95,9 @@ let requires = """
 context.evaluateScript(requires)
 
 // Load metadata file from GitHub.
-let phoneMetadata = URL(string: "https://raw.githubusercontent.com/googlei18n/libphonenumber/master/javascript/i18n/phonenumbers/metadata.js")!
-let phoneMetadataForTesting = URL(string: "https://raw.githubusercontent.com/googlei18n/libphonenumber/master/javascript/i18n/phonenumbers/metadatafortesting.js")!
-let shortNumberMetadata = URL(string: "https://raw.githubusercontent.com/googlei18n/libphonenumber/master/javascript/i18n/phonenumbers/shortnumbermetadata.js")!
+let phoneMetadata = URL(string: "https://raw.githubusercontent.com/googlei18n/libphonenumber/\(tagName)/javascript/i18n/phonenumbers/metadata.js")!
+let phoneMetadataForTesting = URL(string: "https://raw.githubusercontent.com/googlei18n/libphonenumber/\(tagName)/javascript/i18n/phonenumbers/metadatafortesting.js")!
+let shortNumberMetadata = URL(string: "https://raw.githubusercontent.com/googlei18n/libphonenumber/\(tagName)/javascript/i18n/phonenumbers/shortnumbermetadata.js")!
 
 let currentDir = FileManager.default.currentDirectoryPath
 let baseURL = URL(fileURLWithPath: currentDir).appendingPathComponent("generatedJSON")
